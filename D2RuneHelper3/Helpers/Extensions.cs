@@ -9,7 +9,7 @@ namespace D2RuneHelper3.Helpers
     {
         public static string RuneImage(this string runeName)
         {
-            return $"rune-{runeName}.png";
+            return $"rune-{runeName.ToLower()}.png";
         }
     }
 }
