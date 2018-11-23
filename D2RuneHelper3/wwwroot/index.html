@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width">
     <title>D2RuneHelper3</title>
     <base href="/" />
+    <!-- for github pages <base href="/Diablo2RuneHelper/" /> -->
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/site.css" rel="stylesheet" />
     <link href="css/d2runehelper.css" rel="stylesheet" />
-    
+    <link href="css/pace.css" rel="stylesheet" />
+
     <script>
-        (function(){
+        (function () {
             var redirect = sessionStorage.redirect;
             delete sessionStorage.redirect;
             if (redirect && redirect != location.href) {
@@ -18,6 +20,17 @@
             }
         })();
     </script>
+    <script>
+        paceOptions = {
+            ajax: true, // disabled
+            document: true, // disabled
+            eventLag: false, // disabled
+            elements: {
+                selectors: ['.main']
+            }
+        };
+    </script>
+    <script src="js/pace.min.js"></script>
 </head>
 <body>
     <app>Loading...</app>
