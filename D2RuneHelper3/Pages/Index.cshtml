@@ -12,7 +12,7 @@
     {
         var rune = RuneAppState.Runes[i];
         <div class="col-md-1">
-            <img class="rune" src="/img/@rune.Name.RuneImage()" alt="@rune.Name" />
+            <img class="rune" src="img/@rune.Name.RuneImage()" alt="@rune.Name" />
             <div>@rune.Name</div>
             <div><input type="number" value="@rune.Amount" id="rune-@rune.Name" name="@rune.Name" bind="@Runes[rune.RuneNumber - 1].Amount" onchange="@((UIChangeEventArgs __e) => ChangeRuneAmount(__e, rune))" style="width: 36px;" /></div>
         </div>
