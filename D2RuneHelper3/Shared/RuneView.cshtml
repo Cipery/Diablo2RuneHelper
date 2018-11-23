@@ -1,0 +1,11 @@
+﻿<div clas="runeView">
+    <img src="/img/@Image" alt="@Name">
+</div>
+
+@functions
+{
+    [Parameter]
+    private string Name { get; set; }
+
+    private string Image => $"rune-{Name}.png";
+}

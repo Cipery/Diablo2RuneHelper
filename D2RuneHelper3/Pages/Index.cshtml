@@ -1,0 +1,60 @@
+﻿@page "/"
+@using D2RuneHelper3.Services
+@using System.Linq
+@using System.Threading
+@using D2RuneHelper3.Model
+@using D2RuneHelper3.Helpers
+@implements IDisposable
+
+
+<div class="row">
+    @for (int i = 0; i < RuneAppState.Runes.Length; i++)
+    {
+        var rune = RuneAppState.Runes[i];
+        <div class="col-md-1">
+            <img class="rune" src="/img/@rune.Name.RuneImage()" alt="@rune.Name" />
+            <div>@rune.Name</div>
+            <div><input type="number" value="@rune.Amount" id="rune-@rune.Name" name="@rune.Name" bind="@Runes[rune.RuneNumber - 1].Amount" onchange="@((UIChangeEventArgs __e) => ChangeRuneAmount(__e, rune))" style="width: 36px;" /></div>
+        </div>
+    }
+    
+    <input type="button" onclick="@DebugLog"/>
+</div>
+@functions
+{
+    [Inject]
+    private AppState RuneAppState { get; set; }
+
+    private Rune[] Runes { get; set; }
+
+    protected override void OnInit()
+    {
+        //RuneAppState.OnAvailableRunesChanged += 
+        Runes = RuneAppState.Runes;
+        RuneAppState.OnAvailableRunesChanged += RuneStateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        RuneAppState.OnAvailableRunesChanged -= RuneStateHasChanged;
+    }
+
+    private void RuneStateHasChanged()
+    {
+        Console.WriteLine("RuneStateHasChanged");
+        this.StateHasChanged();
+    }
+
+    void ChangeRuneAmount(UIChangeEventArgs e, Rune rune)
+    {
+        Console.WriteLine($"Value: {e.Value}, {e.Type}, Rune {rune.Name}");
+    }
+
+    void DebugLog()
+    {
+        foreach (var rune in Runes)
+        {
+            Console.WriteLine($"Rune {rune.Name} - Amount {rune.Amount}");
+        }
+    }
+}
