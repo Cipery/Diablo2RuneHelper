@@ -1,0 +1,36 @@
+﻿@page "/"
+@inherits Blazor.Fluxor.Components.FluxorComponent
+@using Blazor.Fluxor
+@using D2RuneHelper3.Store.RuneList
+@inject IState<RuneListState> RuneListState
+@inject IDispatcher Dispatcher
+
+<h1>
+    RuneList component/page
+</h1>
+
+@for (var i = 0; i < RuneListState.Value.RuneCounts.Length; i++)
+{
+    var x = i;
+<div>
+    <span>Rune @i: @RuneListState.Value.RuneCounts[x] </span>
+    <span><input type="button" onclick="@((e) => IncrementRune(x))" /></span>
+    <span><input type="button" onclick="@((e) => IncrementRune(x))" /></span>
+</div>
+
+}
+
+
+@functions
+{
+
+    void IncrementRune(int runeIndex)
+    {
+        Dispatcher.Dispatch(new RuneListRuneCountIncrease(runeIndex));
+    }
+
+    void DecrementRune(int runeIndex)
+    {
+        Dispatcher.Dispatch(new RuneListRuneCountDecrease(runeIndex));
+    }
+}

@@ -1,4 +1,5 @@
 using Blazor.Extensions.Storage;
+using Blazor.Fluxor;
 using D2RuneHelper3.Model;
 using D2RuneHelper3.Services;
 using Microsoft.AspNetCore.Blazor.Builder;
@@ -13,6 +14,11 @@ namespace D2RuneHelper3
             services.AddSingleton<DataTable>();
             services.AddSingleton<AppState>();
             services.AddStorage();
+            services.AddFluxor(options => options
+                .UseDependencyInjection(typeof(Startup).Assembly)
+                .AddMiddleware<Blazor.Fluxor.ReduxDevTools.ReduxDevToolsMiddleware>()
+                .AddMiddleware<Blazor.Fluxor.Routing.RoutingMiddleware>()
+            );
         }
 
         public void Configure(IBlazorApplicationBuilder app)
