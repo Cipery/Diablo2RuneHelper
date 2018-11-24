@@ -6,7 +6,32 @@ using Blazor.Fluxor;
 
 namespace D2RuneHelper3.Store.RuneList
 {
-    public class RuneListRuneCountIncrease : IAction
+    public class RuneListLoadFromLocalStoreAction : IAction
+    {
+        
+    }
+
+    public class RuneListSaveToLocalStoreAction : IAction
+    {
+        public int[] RuneCounts;
+
+        public RuneListSaveToLocalStoreAction(int[] runeCounts)
+        {
+            RuneCounts = runeCounts;
+        }
+    }
+
+    public class RuneListSetBulkRuneCount : IAction, IRefilterRuneWordsAfterDispatch
+    {
+        public int[] RuneCounts;
+
+        public RuneListSetBulkRuneCount(int[] runeCounts)
+        {
+            RuneCounts = runeCounts;
+        }
+    }
+
+    public class RuneListRuneCountIncrease : IAction, ISaveAfterDispatch, IRefilterRuneWordsAfterDispatch
     {
         public int RuneIndex { get; }
 
@@ -16,7 +41,7 @@ namespace D2RuneHelper3.Store.RuneList
         }
     }
 
-    public class RuneListRuneCountDecrease : IAction
+    public class RuneListRuneCountDecrease : IAction, ISaveAfterDispatch, IRefilterRuneWordsAfterDispatch
     {
         public int RuneIndex { get;}
 
@@ -24,5 +49,10 @@ namespace D2RuneHelper3.Store.RuneList
         {
             RuneIndex = runeIndex;
         }
+    }
+
+    public class RecalculateAvailableRuneWordsAction : IAction
+    {
+
     }
 }

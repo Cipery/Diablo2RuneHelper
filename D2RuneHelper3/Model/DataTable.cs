@@ -8,6 +8,9 @@ namespace D2RuneHelper3.Model
     public class DataTable
     {
         public Rune[] Runes { get; } = new Rune[33];
+        public IDictionary<string, Rune> RuneD { get; }
+
+        public RuneWord[] RuneWords { get; }
 
         public DataTable()
         {
@@ -44,6 +47,38 @@ namespace D2RuneHelper3.Model
             Runes[30] = new Rune(31, "Jah");
             Runes[31] = new Rune(32, "Cham");
             Runes[32] = new Rune(33, "Zod");
+
+            RuneD = Runes.ToDictionary(p => p.Name);
+
+            var runeWords = new List<RuneWord>();
+            runeWords.Add(new RuneWord("Infinity", new []
+            {
+                RuneD["Ber"],
+                RuneD["Mal"],
+                RuneD["Ber"],
+                RuneD["Ist"]
+            }, "Conviction aura bro"));
+
+            RuneWords = runeWords.ToArray();
+        }
+
+        public IEnumerable<RuneWord> GetAvailableRuneWords(int[] runeCounts)
+        {
+            var resultingList = new List<RuneWord>();
+            foreach (var runeWord in RuneWords)
+            {
+                var requiredRunes = runeWord.GetAggregatedRuneRequiements();
+                var ok = !requiredRunes.Any(r => runeCounts[r.Key.RuneNumber - 1] < r.Value);
+
+                if (!ok)
+                {
+                    continue;
+                }
+
+                resultingList.Add(runeWord);
+            }
+
+            return resultingList;
         }
     }
 }

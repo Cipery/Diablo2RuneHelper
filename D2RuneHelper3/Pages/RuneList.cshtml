@@ -2,28 +2,38 @@
 @inherits Blazor.Fluxor.Components.FluxorComponent
 @using Blazor.Fluxor
 @using D2RuneHelper3.Store.RuneList
+@using D2RuneHelper3.Model
 @inject IState<RuneListState> RuneListState
 @inject IDispatcher Dispatcher
+@inject DataTable DataTable
 
 <h1>
     RuneList component/page
 </h1>
 
-@for (var i = 0; i < RuneListState.Value.RuneCounts.Length; i++)
-{
-    var x = i;
-<div>
-    <span>Rune @i: @RuneListState.Value.RuneCounts[x] </span>
-    <span><input type="button" onclick="@((e) => IncrementRune(x))" /></span>
-    <span><input type="button" onclick="@((e) => IncrementRune(x))" /></span>
+<div class="row">
+    @for (var i = 0; i < RuneListState.Value.RuneCounts.Length; i++)
+    {
+        var x = i;
+        <div class="col-md-1">
+            <span>@DataTable.Runes[x].Name @RuneListState.Value.RuneCounts[x]</span>
+            <span>
+                <input type="button" onclick="@((e) => DecrementRune(x))" value="-"/>
+                <input type="button" onclick="@((e) => IncrementRune(x))" value="+"/>
+            </span>
+        </div>
+    }
 </div>
 
+
+@foreach (var runeWord in RuneListState.Value.PossibleRuneWords)
+{
+    @runeWord.Name
 }
 
 
 @functions
 {
-
     void IncrementRune(int runeIndex)
     {
         Dispatcher.Dispatch(new RuneListRuneCountIncrease(runeIndex));

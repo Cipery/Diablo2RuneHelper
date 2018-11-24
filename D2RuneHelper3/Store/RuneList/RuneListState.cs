@@ -8,16 +8,18 @@ namespace D2RuneHelper3.Store.RuneList
 {
     public class RuneListState
     {
-        public int[] RuneCounts { get; private set; }
+        public int[] RuneCounts { get; }
+        public IEnumerable<RuneWord> PossibleRuneWords { get; }
 
         private RuneListState()
         {
 
         }
 
-        public RuneListState(int[] runeCounts)
+        public RuneListState(int[] runeCounts, IEnumerable<RuneWord> possibleRuneWords)
         {
             RuneCounts = runeCounts;
+            PossibleRuneWords = possibleRuneWords;  
         }
     }
 }
