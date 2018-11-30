@@ -1,5 +1,8 @@
-@inherits BlazorLayoutComponent
-
+@using Blazor.Fluxor
+@using D2RuneHelper3.Store.RuneList
+@inherits Microsoft.AspNetCore.Blazor.Layouts.BlazorLayoutComponent
+@inject Blazor.Fluxor.IStore Store
+@Store.Initialize()
 <div class="sidebar">
     <NavMenu />
 </div>
@@ -13,3 +16,14 @@
         @Body
     </div>
 </div>
+
+@functions
+{
+
+    protected override async Task OnInitAsync()
+    {
+        Console.WriteLine("OnInitAsync MainLayout");
+        Store.Dispatch(new RuneListLoadFromLocalStoreAction());
+    }
+
+}

@@ -23,6 +23,11 @@ namespace D2RuneHelper3.Model
             }
         }
 
+        public Rune()
+        {
+
+        }
+
         public Rune(int runeNumber, string name)
         {
             RuneNumber = runeNumber;
