@@ -1,6 +1,7 @@
 ﻿@page "/"
 @inherits Blazor.Fluxor.Components.FluxorComponent
 @using Blazor.Fluxor
+@using D2RuneHelper3.Helpers
 @using D2RuneHelper3.Store.RuneList
 @using D2RuneHelper3.Model
 @inject IState<RuneListState> RuneListState
@@ -11,25 +12,46 @@
     RuneList component/page
 </h1>
 
-<div class="row">
-    @for (var i = 0; i < RuneListState.Value.RuneCounts.Length; i++)
-    {
-        var x = i;
-        <div class="col-md-1">
-            <span>@DataTable.Runes[x].Name @RuneListState.Value.RuneCounts[x]</span>
-            <span>
-                <input type="button" onclick="@((e) => DecrementRune(x))" value="-"/>
-                <input type="button" onclick="@((e) => IncrementRune(x))" value="+"/>
-            </span>
+<div class="container-fluid">
+    <div class="row">
+        @for (var i = 0; i < RuneListState.Value.RuneCounts.Length; i++)
+        {
+            var x = i;
+            var rune = DataTable.Runes[x];
+            <div class="col-md-1">
+                <div>
+                    <img class="rune" src="img/@rune.Name.RuneImage()" alt="@rune.Name" />
+                    <span>
+                        <a href="#" onclick="@((e) => DecrementRune(x))">-</a>
+                        <a href="#" onclick="@((e) => IncrementRune(x))">+</a>
+                    </span>
+                </div>
+                <div>
+                    <span>@rune.Name [@RuneListState.Value.RuneCounts[x]x]</span>
+                </div>
+            </div>
+        }
+    </div>
+
+
+    <br />
+    @D2RuneHelper3.Model.DataTable.testo
+    <br />
+    @D2RuneHelper3.Model.DataTable.testoJSON
+    <br/>
+
+    <div class="row" style="margin-top: 25px">
+        <div class="col-md-12">
+            <ul>
+                @foreach (var runeWord in RuneListState.Value.PossibleRuneWords)
+                {
+                    <li><strong>@runeWord.Name</strong> - </li>
+                }
+            </ul>
         </div>
-    }
+    </div>
 </div>
 
-
-@foreach (var runeWord in RuneListState.Value.PossibleRuneWords)
-{
-    @runeWord.Name
-}
 
 
 @functions

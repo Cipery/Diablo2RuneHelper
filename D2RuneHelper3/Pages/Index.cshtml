@@ -17,8 +17,8 @@
             <div><input type="number" value="@rune.Amount" id="rune-@rune.Name" name="@rune.Name" bind="@Runes[rune.RuneNumber - 1].Amount" onchange="@((UIChangeEventArgs __e) => ChangeRuneAmount(__e, rune))" style="width: 36px;" /></div>
         </div>
     }
-    
-    <input type="button" onclick="@DebugLog"/>
+
+    <input type="button" onclick="@DebugLog" />
 </div>
 @functions
 {
